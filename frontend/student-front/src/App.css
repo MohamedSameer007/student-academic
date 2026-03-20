@@ -1,0 +1,431 @@
+/* =========================================
+   1. IMPORTS & GLOBAL STYLES
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playwrite+DE+VA+Guides&family=Playwrite+VN:wght@100..400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+span {
+    font-size: 19px;
+    font-weight: 600;
+    color: gold;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    font-size: 24px;
+    font-weight: 450;
+}
+
+td {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+th.gold {
+    color: yellow;
+}
+
+/* =========================================
+   2. LAYOUT & PAGES
+   ========================================= */
+.home {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url(/rmkfront2.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    /* Keeps background fixed */
+
+    overflow-y: auto;
+    /* Enables scrolling */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer & Edge */
+}
+
+.main {
+    width: 100%;
+}
+
+.main .row {
+    padding: 10px;
+    border-radius: 16px;
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(7px);
+    margin-top: 40px;
+    height: 450px !important;
+}
+
+.main h1:nth-child(1) {
+    font-size: 40px;
+    font-weight: 600;
+    color: #009E6E !important;
+}
+
+.main .btn {
+    border: none;
+    outline: none;
+    color: white !important;
+    background-color: #009E6E;
+}
+
+.img {
+    height: 430px;
+    border-radius: 16px;
+    background: url(/rmkfront12.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* =========================================
+   3. NAVBAR
+   ========================================= */
+.navbar {
+    width: 100%;
+    background-color: transparent;
+    padding: 8px 20px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar h1 {
+    font-size: 35px;
+    font-weight: 600;
+    color: white !important;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 1) !important;
+    margin-left: 8px;
+}
+
+.rmk-div {
+    display: flex;
+}
+
+.navbar-brand img {
+    width: 35px;
+}
+
+/* =========================================
+   4. BOX COMPONENT
+   ========================================= */
+.box {
+    display: flex;
+    flex-direction: column;
+    height: 76vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 10px 7rem;
+    margin: 15px 0px;
+}
+
+.box input {
+    width: 500px;
+    padding: 15px !important;
+    border-radius: 35px !important;
+}
+
+.box-head {
+    text-align: center;
+    font-size: 50px;
+    font-weight: 600;
+    margin: 4px 0;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 16px rgba(0, 0, 0, 1) !important;
+}
+
+.box-body {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 30px;
+    color: white;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 1) !important;
+}
+
+.box-body h1 {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.box-input {
+    padding: 20px 100px;
+}
+
+.box-year-dept {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 9rem;
+    padding: 10px 0px;
+}
+
+.box-year-dept .year {
+    color: white;
+    text-shadow: 0px 0px 5px black;
+    font-weight: 500;
+}
+
+.box-year-dept .dept {
+    color: black;
+    text-shadow: 0px 0px 5px white;
+    font-weight: 500;
+}
+
+.box-item {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    border-radius: 30px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(7px);
+    color: white;
+}
+
+.box-item h3 {
+    font-size: 22px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.box-item p {
+    border-bottom: 2px solid #009E6E;
+    font-size: 20px;
+}
+
+.list {
+    padding: 10px 10px;
+    color: black !important;
+    text-shadow: 0 0 8px white;
+    font-weight: 600;
+}
+
+/* =========================================
+   5. USER DETAILS CARD
+   ========================================= */
+.user-card {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.user-details {
+    cursor: pointer;
+    width: 30%;
+    padding: 10px;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(7px);
+    color: white !important;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 1) !important;
+}
+
+/* =========================================
+   6. CERTIFICATES
+   ========================================= */
+.certificate {
+    width: 100%;
+    padding: 30px;
+}
+
+.certificate-body {
+    border-radius: 30px;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(7px);
+}
+
+.bunch-certificate {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.certificate-single {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(7px);
+    padding: 10px 20px;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 345px;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.certificate-single:hover {
+    transform: scale(1.03);
+}
+
+.certificate-desc {
+    cursor: pointer;
+}
+
+/* =========================================
+   7. MODALS
+   ========================================= */
+.desc-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.desc-modal {
+    background: #0b0b0b;
+    color: #ffffff;
+    padding: 24px;
+    width: 90%;
+    max-width: 620px;
+    max-height: 900px;
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: hidden;
+}
+
+.desc-modal p::-webkit-scrollbar {
+    width: 6px;
+}
+
+.desc-modal p::-webkit-scrollbar-thumb {
+    background: #ffc107;
+    border-radius: 10px;
+}
+
+.desc-modal p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    max-height: 40vh;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+.desc-modal button {
+    align-self: flex-start;
+    padding: 6px 16px;
+}
+
+/* =========================================
+   8. AUTHENTICATION (LOGIN & SIGNUP)
+   ========================================= */
+.login-page {
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    text-align: center;
+    width: 450px;
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(7px);
+}
+
+.login form {
+    text-align: left;
+}
+
+.signup {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-body {
+    width: 400px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(7px);
+    padding: 30px;
+    border-radius: 9px;
+}
+
+/* =========================================
+   9. MEDIA QUERIES
+   ========================================= */
+@media (max-width: 768px) {
+    .box-head {
+        font-size: 40px;
+    }
+
+    .box-body h1 {
+        font-size: 25px;
+    }
+
+    .box-item h3 {
+        font-size: 15px;
+        font-weight: 400;
+    }
+
+    .box-item p {
+        font-size: 14px;
+    }
+
+    .user-details {
+        width: 100%;
+    }
+
+    .main h1:nth-child(1) {
+        font-size: 33px;
+    }
+
+    .img {
+        height: 300px;
+    }
+}
