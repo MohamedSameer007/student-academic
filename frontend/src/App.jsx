@@ -17,13 +17,45 @@ const API_URL = "http://localhost:5000/api";
    Home Pageeeeeee
 =========================== */
 function Home() {
-  const [year, setYear] = useState("");
-  const [dept, setDept] = useState("");
+  // const [year, setYear] = useState("");
+  // const [dept, setDept] = useState("");
+  // const [students, setStudents] = useState([]);
+  // const [searchTerm, setSearchTerm] = useState(""); // ✅ NEW
+
+  // const departments = ["IT", "CSE", "AIDS", "ECE"];
+  // const years = [1, 2, 3, 4];
+
+  // const fetchStudents = async () => {
+  //   if (year && dept) {
+  //     const res = await axios.get(
+  //       `${API_URL}/students?year=${year}&department=${dept}`
+  //     );
+  //     setStudents(res.data);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchStudents();
+  // }, [year, dept]);
+  // function Home() {
+  const { year: yearParam, dept: deptParam } = useParams();
+  const navigate = useNavigate();
+
+  const year = yearParam ? Number(yearParam) : "";
+  const dept = deptParam || "";
+
   const [students, setStudents] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // ✅ NEW
+  const [searchTerm, setSearchTerm] = useState("");
 
   const departments = ["IT", "CSE", "AIDS", "ECE"];
   const years = [1, 2, 3, 4];
+  const [loggedInUser, setLoggedInUser] = useState(
+    JSON.parse(localStorage.getItem("student"))
+  );
+
+  const handleLogout = () => {
+    localStorage.removeItem("student");
+    setLoggedInUser(null);
+  };
 
   const fetchStudents = async () => {
     if (year && dept) {
@@ -31,10 +63,14 @@ function Home() {
         `${API_URL}/students?year=${year}&department=${dept}`
       );
       setStudents(res.data);
+    } else {
+      setStudents([]);
     }
   };
+
   useEffect(() => {
     fetchStudents();
+    setSearchTerm("");
   }, [year, dept]);
 
   // ✅ Filter students based on searchTerm
@@ -51,7 +87,7 @@ function Home() {
       <div className="navbar">
         <div className="rmk-div">
           <img
-            src="logo2.gif"
+            src="/logo2.gif"
             alt="logo"
             className="me-2"
             style={{ width: "35px" }}
@@ -59,24 +95,53 @@ function Home() {
           <h1 className="navbar-brand mb-0 fw-bold">R.M.K</h1>
         </div>
         <div>
-          {/* <Link to="/" className="btn btn-warning">Home</Link> |{" "} */}
-          <Link to="/signup" className="btn btn-dark">
-            Signup
+          <Link to="/" className="btn btn-warning">
+            Home
           </Link>{" "}
           |{" "}
-          <Link to="/login" className="btn btn-light">
-            Login
-          </Link>
+          {loggedInUser ? (
+            <>
+              <Link
+                to={`/student/${loggedInUser._id}`}
+                className="btn btn-success"
+              >
+                {loggedInUser.name}
+              </Link>{" "}
+              |{" "}
+              <button className="btn btn-danger" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/signup" className="btn btn-dark">
+                Signup
+              </Link>{" "}
+              |{" "}
+              <Link to="/login" className="btn btn-light">
+                Login
+              </Link>
+            </>
+          )}
         </div>
       </div>
       {/* ===== Year & Department ===== */}
       <div className="box-year-dept">
         <div>
           <h3 className="year">Select Year</h3>
-          {years.map((y) => (
+          {/* {years.map((y) => (
             <button
               key={y}
               onClick={() => setYear(y)}
+              className={`btn ms-2 ${year === y ? "btn-warning" : "btn-dark"}`}
+            >
+              {y} Year
+            </button>
+          ))} */}
+          {years.map((y) => (
+            <button
+              key={y}
+              onClick={() => navigate(dept ? `/${y}/${dept}` : `/${y}`)}
               className={`btn ms-2 ${year === y ? "btn-warning" : "btn-dark"}`}
             >
               {y} Year
@@ -88,13 +153,21 @@ function Home() {
           {year && (
             <>
               <h3 className="dept">Select Department</h3>
-              {departments.map((d) => (
+              {/* {departments.map((d) => (
                 <button
                   key={d}
                   onClick={() => setDept(d)}
-                  className={`btn ms-2 ${
-                    dept === d ? "btn-warning" : "btn-light"
-                  }`}
+                  className={`btn ms-2 ${dept === d ? "btn-warning" : "btn-light"
+                    }`}
+                >
+                  {d}
+                </button>
+              ))} */}
+              {departments.map((d) => (
+                <button
+                  key={d}
+                  onClick={() => navigate(`/${year}/${d}`)}
+                  className={`btn ms-2 ${dept === d ? "btn-warning" : "btn-light"}`}
                 >
                   {d}
                 </button>
@@ -107,7 +180,6 @@ function Home() {
       {!year && (
         <div
           className="main container d-flex justify-content-center mt-0"
-          style={{ minHeight: "650px" }}
           data-aos="zoom-in"
           data-aos-delay="0"
           data-aos-duration="1000"
@@ -363,7 +435,7 @@ function StudentDetail() {
 
           {/* Certificates List */}
           <h3 className="display-6 text-white my-2">Certificates</h3>
-          
+
           {certs.length === 0 ? (
             <p className="text-white">No certificates uploaded yet.</p>
           ) : (
@@ -428,32 +500,38 @@ function StudentDetail() {
               ))}
             </div>
           )}
-          <Link to="/" className="btn btn-light mt-2">
+          {/* <Link to="/" className="btn btn-light mt-2">
+            Back
+          </Link> */}
+          <Link
+            to={`/${student.year}/${student.department}`}
+            className="btn btn-light mt-2"
+          >
             Back
           </Link>
         </div>
       </div>
       {/* ✅ DESCRIPTION MODAL — OUTSIDE GRID */}
-    {showDesc && (
-      <div
-        className="desc-modal-backdrop"
-        onClick={() => setShowDesc(false)}
-      >
+      {showDesc && (
         <div
-          className="desc-modal"
-          onClick={(e) => e.stopPropagation()}
+          className="desc-modal-backdrop"
+          onClick={() => setShowDesc(false)}
         >
-          <h5>Description</h5>
-          <p>{activeDesc}</p>
-          <button
-            className="btn btn-warning mt-3"
-            onClick={() => setShowDesc(false)}
+          <div
+            className="desc-modal"
+            onClick={(e) => e.stopPropagation()}
           >
-            Close
-          </button>
+            <h5>Description</h5>
+            <p>{activeDesc}</p>
+            <button
+              className="btn btn-warning mt-3"
+              onClick={() => setShowDesc(false)}
+            >
+              Close
+            </button>
+          </div>
         </div>
-      </div>
-    )}
+      )}
     </div>
   );
 }
@@ -738,24 +816,56 @@ function Signup() {
   );
 }
 
-export default function App() {
-  const isLoggedIn = !!localStorage.getItem("student");
+function Protected({ children }) {
+  const user = localStorage.getItem("student");
+  return user ? children : <Navigate to="/login" replace />;
+}
 
+// export default function App() {
+//   const isLoggedIn = !!localStorage.getItem("student");
+
+//   return (
+//     <Router>
+//       {/* <Navbar /> */}
+//       <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="/:year" element={<Home />} />
+//         <Route path="/:year/:dept" element={<Home />} />
+
+//         <Route path="/signup" element={<Signup />} />
+//         <Route path="/login" element={<Login />} />
+//         <Route path="/forgot-password" element={<ForgotPassword />} />
+
+//         <Route path="/home" element={isLoggedIn ? <Home /> : <Login />} />
+//         <Route
+//           path="/student/:id"
+//           element={isLoggedIn ? <StudentDetail /> : <Login />}
+//         />
+//       </Routes>
+//     </Router>
+//   );
+// }
+
+export default function App() {
   return (
     <Router>
-      {/* <Navbar /> */}
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
+        <Route path="/:year" element={<Home />} />
+        <Route path="/:year/:dept" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
         {/* Protected Routes */}
-        <Route path="/home" element={isLoggedIn ? <Home /> : <Login />} />
         <Route
           path="/student/:id"
-          element={isLoggedIn ? <StudentDetail /> : <Login />}
+          element={
+            <Protected>
+              <StudentDetail />
+            </Protected>
+          }
         />
       </Routes>
     </Router>
